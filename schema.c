@@ -13,6 +13,14 @@
  */
 
 #include <stdio.h>
+#if COMPILER==MICROSOFT
+#if COMPILER==VMSC
+#if COMPILER==GCC
+#include <stdlib.h>
+#include <string.h>
+#endif
+#endif
+#endif
 #define SCHEMA
 #include "cdata.h"
 
@@ -34,7 +42,9 @@ int ndxele [MXFILS] [MXINDEX] [MXCAT]; 	/* indices		   */
 char word[NAMLEN+1];
 #if COMPILER != VMSC
 #if COMPILER != MICROSOFT
+#if COMPILER != GCC
 char *malloc();
+#endif
 #endif
 #endif
 int lnctr = 0;	/* input stream line counter */

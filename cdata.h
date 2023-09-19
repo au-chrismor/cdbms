@@ -11,6 +11,7 @@
 #define TURBOC      8	/* Turbo C					*/
 #define WIZARD 	    9	/* Wizard C                 */
 #define VMSC        10  /* OpenVMS C Compiler       */
+#define GCC			11	/* GNU GCC					*/
 
 #define ERROR -1
 #define OK 0
