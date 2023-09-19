@@ -65,8 +65,16 @@ extern int errno;
 #include <sys\types.h>
 #include <sys\stat.h>
 #include <string.h>
-#include <stdlib.h>
+#include <stdlib.h>h
 #define OPENMODE O_RDWR+O_BINARY
+#undef CMODE
+#define CMODE S_IWRITE
+#endif
+
+#if COMPILER == GCC
+#include <unistd.h>
+#include <sys/stat.h>
+#define OPENMODE O_RDWR
 #undef CMODE
 #define CMODE S_IWRITE
 #endif
