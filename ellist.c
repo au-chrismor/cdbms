@@ -8,6 +8,14 @@
  */
 
 #include <stdio.h>
+#if COMPILER==MICROSOFT
+#if COMPILER==VMSC
+#if COMPILER==GCC
+#include <stdlib.h>
+#include <string.h>
+#endif
+#endif
+#endif
 #include "cdata.h"
 
 int ellist(int count, char *names[], int *list)
@@ -32,5 +40,3 @@ int ellist(int count, char *names[], int *list)
 	*list = 0;
 	return OK;
 }
-
-

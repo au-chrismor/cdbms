@@ -174,8 +174,9 @@ int add_rcd(int f, char* bf);
 void db_open(char *path, int *fl);
 void db_cls(void);
 void dberror(void);
-void dblist(int fd, int inter, int f, int k, int *list);
+void dblist(FILE *fd, int inter, int f, int k, int *list);
 int ellist(int count, char *names[], int *list);
+int epos(int el, int *list);
 void file_create(char *name, int len);
 void init_rcd();
 void clrrcd();
@@ -185,12 +186,21 @@ static void index_m(int f, int *m);
 int filename(char *fn);
 
 /* ---------- screen driver function definitions --------- */
-void init_screen(char* name, int* els, char* bfr);
-void protect();
-void edit();
+void data_coord(int el);
 void display_template();
-void tally();
+void edit(el, func);
+int elp(int el);
+void init_screen(char* name, int* els, char* bfr);
+void insert_status(void);
+int no_flds(void);
+void put_fchar(int c);
+void protect(int el, int tf);
 void put_field();
+int read_element(char type, char *msk, char *bfr);
+void right_justify(char *s);
+void right_justify_zero_fill(char *s);
+void tally(void);
+int validate_date(char *s);
 #else
 static void de_dict(void);
 static void defout(void);
@@ -206,6 +216,7 @@ static void name_val(void);
 static void numb_val(void);
 static void schout(void);
 static void skip_white(char **s);
+int spaces(char *c);
 static void strout(void);
 #endif
 

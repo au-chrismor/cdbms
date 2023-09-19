@@ -52,4 +52,3 @@ static void index_m(int f, int *m)
 				-sizeof(RPTR)*4))/(len+sizeof(RPTR));
 	}
 }
-

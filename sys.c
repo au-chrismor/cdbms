@@ -24,6 +24,11 @@
 #if COMPILER == TURBOC
 #define ci() getch()
 #endif
+#if COMPILER == GCC
+#include <ncurses.h>
+#define ci() getch()
+#endif
+
 
 /* ------------- get a keyboard character ----------------- */
 int get_char()

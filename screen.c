@@ -1,5 +1,13 @@
 /* ----------------- screen.c ------------------------- */
 #include <stdio.h>
+#if COMPILER==MICROSOFT
+#if COMPILER==VMSC
+#if COMPILER==GCC
+#include <stdlib.h>
+#include <string.h>
+#endif
+#endif
+#endif
 #include "cdata.h"
 #include "keys.h"
 
@@ -18,7 +26,7 @@ char *bf;
 char *tname;
 void right_justify(),
      right_justify_zero_fill(), left_justify_zero_fill(),
-	 disp_element(), insert_status(),
+	 disp_element(),
 	 put_fchar(), data_coord();
 
 /* ----------- initialize the screen process ------------- */
@@ -44,7 +52,7 @@ int el, (*func)();
 
 /* ---- compute the relative position
 			of an element on a screen ------ */
-static int elp(int el)
+int elp(int el)
 {
 	int i;
 
@@ -134,7 +142,7 @@ int data_entry(void)
 }
 
 /* ----- Compute the number of fields on a template ------ */
-static int no_flds(void)
+int no_flds(void)
 {
 	int ct = 0;
 
@@ -144,14 +152,14 @@ static int no_flds(void)
 }
 
 /* ------ compute data element field coordinates --------- */
-static void data_coord(int el)
+void data_coord(int el)
 {
 	prev_col = 17;
 	prev_row = elp(el) + 3;
 }
 
 /* ------- read data element from keyboard ------------- */
-static int read_element(char type, char *msk, char *bfr)
+int read_element(char type, char *msk, char *bfr)
 {
 	char *mask = msk, *buff = bfr;
 	int done = FALSE, c, column = prev_col;
@@ -292,7 +300,7 @@ endstroke(c)
 }
 
 /* ------- right justify, space fill -------- */
-static void right_justify(char *s)
+void right_justify(char *s)
 {
 	int len;
 
@@ -309,7 +317,7 @@ static void right_justify(char *s)
 }
 
 /* ---------- right justify, zero fill --------------- */
-static void right_justify_zero_fill(char *s)
+void right_justify_zero_fill(char *s)
 {
 	int len;
 
@@ -331,7 +339,7 @@ int spaces(char *c)
 }
 
 /* -------------- validate a date ----------------- */
-static int validate_date(char *s)
+int validate_date(char *s)
 {
 	static int days [] =
 		{ 31,28,31,30,31,30,31,31,30,31,30,31 };
@@ -371,7 +379,7 @@ void put_field(int el)
 }
 
 /* ---------- display a data element -------- */
-static void disp_element(char *b, char *msk)
+void disp_element(char *b, char *msk)
 {
 	while (*msk)	{
 		put_fchar(*msk != FIELDCHAR ? *msk : *b++);
@@ -382,7 +390,7 @@ static void disp_element(char *b, char *msk)
 
 
 /* ---------- display insert mode status ------------------ */
-static void insert_status(void)
+void insert_status(void)
 {
 	cursor(65,24);
 	printf(insert_mode ? "[INS]" : "     ");
@@ -390,7 +398,7 @@ static void insert_status(void)
 }
 
 /* --------- write a field character --------- */
-static void put_fchar(int c)
+void put_fchar(int c)
 {
 	put_char(c == ' ' ? '_' : c);
 }

@@ -1,3 +1,7 @@
+dbinit
+dbsize
+index
+invoice
 schema
 *.o
 *.a

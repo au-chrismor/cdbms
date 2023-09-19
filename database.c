@@ -277,9 +277,7 @@ int *dlist;		/* destination data element list */
 
 /* -------- compute relative position of
 				a data element within a record -----*/
-int epos(el, list)
-int el;			/* element number */
-int *list;		/* record element list */
+int epos(int el, int *list)
 {
 	int len = 0;
 

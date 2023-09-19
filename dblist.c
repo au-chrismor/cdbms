@@ -1,5 +1,12 @@
 /* --------------------- dblist.c ------------------------- */
 #include <stdio.h>
+#if COMPILER==MICROSOFT
+#if COMPILER==VMSC
+#if COMPILER==GCC
+#include <stdlib.h>
+#endif
+#endif
+#endif
 #include "cdata.h"
 
 void dblist(FILE *fd, int inter, int f, int k, int *list)
