@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include "cdata.h"
 
-extern char *dbfiles [];
+/*extern char *dbfiles []; */
 
 int main (int argc, char **argv[])
 {

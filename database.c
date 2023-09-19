@@ -1,6 +1,14 @@
 /* ----------------- database.c ---------------------- */
 
 #include <stdio.h>
+#if COMPILER==MICROSOFT
+#if COMPILER==VMSC
+#if COMPILER==GCC
+#include <stdlib.h>
+#include <string.h>
+#endif
+#endif
+#endif
 #include "cdata.h"
 #include "keys.h"
 #include "database.h"
@@ -223,17 +231,13 @@ int rlen(int f)
 
 
 /* ---------- initialize a file record buffer ------------ */
-void init_rcd(f, bf)
-int f;			/* file number */
-char *bf;		/* buffer */
+void init_rcd(int f, char *bf)
 {
 	clrrcd(bf, file_ele[f]);
 }
 
 /* -------- set a generic record buffer to blanks --------- */
-void clrrcd(bf, els)
-char *bf;		/* buffer */
-int *els;		/* data element list */
+void clrrcd(char *bf, int *els)
 {
 	int ln, i = 0, el;
 	char *rb;
@@ -286,9 +290,7 @@ int *list;		/* record element list */
 
 /* ------------- index management functions ------------ */
 /* ---- initialize the indices for a file ---- */
-static void init_index(path, f)
-char *path;		/* where the data base is */
-int f;			/* file number */
+void init_index(char *path, int f)
 {
 	char xname [64];
 	int x = 0;
@@ -324,8 +326,7 @@ int f;			/* file number */
 }
 
 /* ----- close the indices for a file ------ */
-static void cls_index(f)
-int f;
+void cls_index(int f)
 {
 	int x = 0;
 
@@ -343,10 +344,7 @@ int f;
 
 
 /* ---- add index values from a record to the indices ---- */
-int add_indexes(f, bf, ad)
-int f;
-char *bf;
-RPTR ad;
+int add_indexes(int f, char *bf, RPTR ad)
 {
 	int x = 0;
 	int i;
@@ -367,9 +365,7 @@ RPTR ad;
 }
 
 /* --- delete index values in a record from the indices --- */
-static void del_indexes(f, ad)
-int f;
-RPTR ad;
+void del_indexes(int f, RPTR ad)
 {
 	char *bf;
 	int x = 0;
@@ -395,8 +391,7 @@ RPTR ad;
 
 
 /* ---- compute tree number from file and key number ---- */
-static int treeno(f, k)
-int f, k;
+int treeno(int f, int k)
 {
 	return bfd [f] [k - 1];
 }
@@ -404,9 +399,7 @@ int f, k;
 
 /* ---- validate the contents of a record where its file is
         related to another file in the data base ---------- */
-static int relate_rcd(f, bf)
-int f;
-char *bf;
+int relate_rcd(int f, char *bf)
 {
 	int fx = 0, mx, *fp;
 	static int ff[] = {0, -1};
@@ -438,8 +431,7 @@ char *bf;
 }
 
 /* ----- test a string for data. return TRUE if any ---- */
-static int data_in(c)
-char *c;
+int data_in(char *c)
 {
 	while (*c == ' ')		
 		c++;
@@ -447,10 +439,7 @@ char *c;
 }
 
 /* ------------- get a record from a file -------------- */
-static int getrcd(f, ad, bf)
-int f;
-RPTR ad;
-char *bf;
+int getrcd(int f, RPTR ad, char *bf)
 {
 	get_record(curr_fd [f], ad, bf);
 	curr_a [f] = ad;
@@ -463,10 +452,7 @@ extern FHEADER fh [];
 
 
 /* ----- find a record by relative record number ------ */
-static int rel_rcd(f, ad, bf)
-int f;			/* file number			*/
-RPTR ad;
-int *bf;
+int rel_rcd(int f, RPTR ad, int *bf)
 {
 	errno = 0;
 	if (ad >= fh [curr_fd [f]].next_record)	{
@@ -482,15 +468,14 @@ int *bf;
 }
 
 /* -------------- error message -------- */
-void error_message(s)
-char *s;
+void error_message(char *s)
 {
 	put_char(BELL);
 	post_notice(s);
 }
 
 /* --------- clear notice line ------------- */
-void clear_notice()
+void clear_notice(void)
 {
 	int i;
 
@@ -504,8 +489,7 @@ void clear_notice()
 }
 
 /* ----------- post a notice ----------------- */
-void post_notice(s)
-char *s;
+void post_notice(char *s)
 {
 	clear_notice();
 	cursor(0,24);
@@ -518,9 +502,7 @@ char *s;
 }
 
 /* ---------- Move a block -------- */
-void mov_mem(s, d, l)
-char *s, *d;
-int l;
+void mov_mem(char *s, char *d, int l)
 {
 	if (d > s)
 		while (l--)
@@ -532,16 +514,11 @@ int l;
 
 
 /* --------- Set a block to a character value ----- */
-void set_mem(s, l, n)
-char *s, n;
-int l;
+void set_mem(char *s, int l, char n)
 {
 	while (l--)
 		*s++ = n;
 }
-
-
-
 
 /*
  * Convert a file name into its file token.
@@ -566,8 +543,7 @@ int filename(char *fn)
 }
 
 /* ----------- convert a name to upper case ---------- */
-void name_cvt(c2, c1)
-char *c1, *c2;
+void name_cvt(char *c2, char *c1)
 {
 	while (*c1)	{
 		*c2 = toupper(*c1);
@@ -576,4 +552,3 @@ char *c1, *c2;
 	}
 	*c2 = '\0';
 }
-

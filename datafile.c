@@ -1,6 +1,14 @@
 /* ---------------- datafile.c -------------------------- */
 
 #include <stdio.h>
+#if COMPILER==MICROSOFT
+#if COMPILER==VMSC
+#if COMPILER==GCC
+#include <stdlib.h>
+#include <string.h>
+#endif
+#endif
+#endif
 #include "cdata.h"
 #include "datafile.h"
 

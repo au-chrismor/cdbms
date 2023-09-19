@@ -155,8 +155,8 @@ extern int ellen [];			/* data element lengths	*/
 extern int *file_ele [];		/* file data elements	*/
 extern int **index_ele [];		/* index data elements	*/
 
-void mov_mem();
-void set_mem();
+void mov_mem(char *s, char *d, int l);
+void set_mem(char *s, int l, char n);
 void fatal();
 void cls_file();
 void build_b();
